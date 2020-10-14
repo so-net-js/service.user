@@ -1,5 +1,4 @@
-
-version: "3.7"
+version: '3.7'
 
 services:
   main:
@@ -12,10 +11,10 @@ services:
       - /usr/src/app/node_modules
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
+      - ${MICROSERVICE_PORT}:${MICROSERVICE_PORT}
       - 9229:9229
     command: >
-      sh -c "npm run migrations-up &&
-             npm run start:debug"
+      sh -c "npm run start:debug"
     env_file:
       - .env
     networks:
@@ -23,7 +22,7 @@ services:
     depends_on:
       - postgres
   postgres:
-    container_name: postgres
+    container_name: service.user.postgres
     image: postgres:12
     networks:
       - webnet
