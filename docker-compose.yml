@@ -20,22 +20,20 @@ services:
     networks:
       - webnet
     depends_on:
-      - postgres
-  postgres:
-    container_name: service.user.postgres
-    image: postgres:12
+      - mongodb
+  mongodb:
+    container_name: service.user.mongodb
+    image: mongo
     networks:
       - webnet
     environment:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_DB: ${DB_DATABASE_NAME}
-      PG_DATA: /var/lib/postgresql/data
+      MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_NAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-      - 5432:5432
+      - 27017:27017
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - mongodata:/data/db
 networks:
   webnet:
 volumes:
-  pgdata:
+  mongodata:
